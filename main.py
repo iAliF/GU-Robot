@@ -1,5 +1,6 @@
 import logging
 from datetime import datetime
+from typing import List
 
 from telegram.ext import Updater, PicklePersistence, CallbackContext, JobQueue
 
@@ -35,6 +36,38 @@ def do_job(context: CallbackContext) -> None:
     if not is_set(context):
         logger.debug('Waiting for latest items to be set')
         return
+
+    for name, klass in to_check.items():
+        try:
+            latest = klass.get_latest_item()
+            if latest.url == (latest_url := get_latest_url(context, name)):
+                continue
+
+            items = fetch_items(klass, latest_url)
+            # Todo: Send to channel
+            # Todo: set latest item
+
+        except GUException:
+            klass.log(logging.ERROR, "Couldn't fetch the data")
+
+
+def fetch_items(klass: Base, latest_url: str) -> List[Item]:
+    fetched_items: List[Item] = []
+    klass_items = klass.get_all_items()
+    page = 1
+
+    while True:
+        if len(klass_items) == 0:
+            page += 1
+            klass_items = klass.get_all_items(page)
+
+        item = klass_items.pop(0)
+        if item.url == latest_url:
+            break
+
+        fetched_items.append(item)
+
+    return fetched_items
 
 
 def set_latest_url(context: CallbackContext, name: str, item: Item) -> None:
