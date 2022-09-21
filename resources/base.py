@@ -10,7 +10,7 @@ from rich.logging import RichHandler
 from .exceptions import GUException
 from .models import Item
 
-logging.basicConfig(level="NOTSET", format="%(message)s", datefmt="[%X]", handlers=[RichHandler()])
+logging.basicConfig(level="INFO", format="%(message)s", datefmt="[%X]", handlers=[RichHandler()])
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
