@@ -1,0 +1,2 @@
+class GUException(Exception):
+    pass
