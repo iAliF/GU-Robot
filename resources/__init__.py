@@ -1,5 +1,5 @@
-from .models import DataModel
+from .models import Item
 from .news import News
 from .notifications import Notifications
 
-__all__ = ('News', 'Notifications', 'DataModel')
+__all__ = ('News', 'Notifications', 'Item')

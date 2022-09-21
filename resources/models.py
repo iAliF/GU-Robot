@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class DataModel:
+class Item:
     title: str
     url: str
     date: str
