@@ -11,11 +11,21 @@ robot
 ## Manual setup
 
 1. Clone this repository
-   ```bash
+   ```commandline
    git clone https://github.com/iAliF/GU-Robot
    ```
-2. Create a virtual environment `virtualenv venv`
+2. Create a virtual environment
+   ```commandline
+   virtualenv venv
+   ```
+
 3. Activate the virtual environment
-4. Install requirements using `pip install -r requirements.txt`
+4. Install requirements using
+   ```commandline
+   pip install -r requirements.txt
+   ```
 5. Rename `.env.example` to `.env` and fill in the data
-6. Run the robot using `python main.py`
+6. Run the robot using
+    ```commandline
+   python main.py
+   ```
