@@ -22,11 +22,11 @@ def set_latest_items(context: CallbackContext) -> None:
         return
 
     for name, klass in to_check.items():
-        klass.log(logging.DEBUG, 'Setting latest item')
+        klass.log(logging.INFO, 'Setting latest item')
 
         try:
             set_latest_url(context, name, klass.get_latest_item())
-            klass.log(logging.DEBUG, 'Latest item has been set')
+            klass.log(logging.INFO, 'Latest item has been set')
         except GUException:
             klass.log(logging.ERROR, 'cannot set data')
             jq.run_once(set_latest_items, 60)
