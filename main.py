@@ -2,6 +2,7 @@ import logging
 from datetime import datetime
 from typing import List
 
+from telegram import ParseMode, TelegramError
 from telegram.ext import Updater, PicklePersistence, CallbackContext, JobQueue
 
 import config
@@ -44,11 +45,35 @@ def do_job(context: CallbackContext) -> None:
                 continue
 
             items = fetch_items(klass, latest_url)
-            # Todo: Send to channel
+
+            for item in items:
+                send_to_channel(context, item)
+
             # Todo: set latest item
 
         except GUException:
             klass.log(logging.ERROR, "Couldn't fetch the data")
+
+
+def send_to_channel(context: CallbackContext, item: Item):
+    try:
+        context.bot.send_photo(
+            config.CHANNEL,
+            item.image_url,
+            build_caption(item),
+            parse_mode=ParseMode.MARKDOWN
+        )
+    except TelegramError as err:
+        logger.error('Something went wrong. could not send item to the channel', exc_info=err)
+
+
+def build_caption(item: Item):
+    caption = f"""
+🔹 [{item.title}]({item.url})
+
+📅 {item.date}    
+"""
+    return caption
 
 
 def fetch_items(klass: Base, latest_url: str) -> List[Item]:
