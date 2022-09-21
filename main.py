@@ -46,10 +46,10 @@ def do_job(context: CallbackContext) -> None:
 
             items = fetch_items(klass, latest_url)
 
-            for item in items:
+            for item in reversed(items):
                 send_to_channel(context, item)
 
-            # Todo: set latest item
+            set_latest_url(context, name, items[0])
 
         except GUException:
             klass.log(logging.ERROR, "Couldn't fetch the data")
