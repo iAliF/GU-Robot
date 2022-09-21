@@ -16,7 +16,7 @@ logger.setLevel(logging.DEBUG)
 
 
 class Base:
-    __base_url = 'https://gu.ac.ir/'
+    __base_url = 'https://gu.ac.ir'
     _default_image_url = 'file/c604dcdc-8f39-ed11-9eda-005056998f1e/سردر2.jpg'
 
     def __init__(self, name: str, section_url: str) -> None:
